@@ -1,9 +1,11 @@
 import React from 'react';
 import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
 import { BoxesCore } from "../../components/ui/background-boxes";
 import { SkillsCard } from "../../components/ui/skills-card";
 import { SkillsStickyScroll } from '../../components/SkillsStickyScroll';
 import { ExperienceStickyScroll } from '../../components/ExperienceStickyScroll';
+import { LeadershipStickyScroll } from '../../components/LeadershipStickyScroll';
 
 export default function About() {
   return (
@@ -38,6 +40,11 @@ export default function About() {
         <h1 className="z-10 text-4xl font-bold">Experience</h1>
         <ExperienceStickyScroll />
       </div>
+      <div className="flex justify-center items-center flex-col text-zinc-50 gap-3 h-screen text-center text-zinc-50">
+        <h1 className="z-10 text-4xl font-bold">Leadership / Teaching</h1>
+        <LeadershipStickyScroll />
+      </div>
+      <Footer />
     </div>
   );
 }

@@ -2,6 +2,7 @@ import Navbar from "../components/Navbar";
 import { BackgroundBeams } from "../components/ui/background-beams";
 import { TextGenerateEffect } from "../components/ui/text-generate-effect";
 import {HomeCards} from "../components/HomeCards";
+import Footer from "../components/Footer";
 
 
 
@@ -31,6 +32,7 @@ export default function Home() {
         <h1 className="text-3xl font-bold">Check out these pages</h1>
         <HomeCards />
       </div>
+      <Footer/>
     </div>
   );
 }
