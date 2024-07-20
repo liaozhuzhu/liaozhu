@@ -10,14 +10,20 @@ export default function Navbar () {
           </Link>
         </div>
         <div className="flex justify-end gap-5 items-center w-1/2">
-          <Link href="/">
-            <p className="text-md text-zinc-500 transition duration-300 hover:text-zinc-50 p-2 rounded-lg">Home</p>
-          </Link>
           <Link href="/about">
-            <p className="text-md text-zinc-500 transition duration-300 hover:text-zinc-50 p-2 rounded-lg">About Me</p>
+            <p className="text-md text-zinc-500 transition duration-300 hover:text-zinc-50 p-2 rounded-lg">
+              About Me
+            </p>
+          </Link>
+          <Link href="/projects">
+            <p className="text-md text-zinc-500 transition duration-300 hover:text-zinc-50 p-2 rounded-lg">
+              Projects
+            </p>
           </Link>
           <Link href="/contact">
-            <p className="text-md text-zinc-500 transition duration-300 hover:text-zinc-50 p-2 rounded-lg">Contact</p>
+            <p className="text-md text-zinc-500 transition duration-300 hover:text-zinc-50 p-2 rounded-lg">
+              Contact
+            </p>
           </Link>
         </div>
       </div>

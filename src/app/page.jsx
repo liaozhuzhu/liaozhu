@@ -1,7 +1,7 @@
 import Navbar from "../components/Navbar";
 import { BackgroundBeams } from "../components/ui/background-beams";
 import { TextGenerateEffect } from "../components/ui/text-generate-effect";
-import {CardHoverEffectDemo} from "../components/CardHoverEffect";
+import {HomeCards} from "../components/HomeCards";
 
 
 
@@ -27,8 +27,9 @@ export default function Home() {
         />
         <BackgroundBeams />
       </div>
-      <div className="flex justify-center items-center h-screen">
-        <CardHoverEffectDemo />
+      <div className="flex justify-center items-center h-screen text-zinc-50 flex-col">
+        <h1 className="text-3xl font-bold">Check out these pages</h1>
+        <HomeCards />
       </div>
     </div>
   );
