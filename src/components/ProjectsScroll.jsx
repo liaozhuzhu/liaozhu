@@ -12,7 +12,7 @@ const content = [
         <li>
           University's first ever course grade distribution for over 2 years of
           data and over <strong>1700</strong> courses. Attained{" "}
-          <strong>50,000</strong>
+          <strong>50,000</strong>{" "}
           interactions from students and faculty within the first month of
           launch.
         </li>
@@ -31,8 +31,7 @@ const content = [
         <li>
           University's first ever course grade distribution for over 2 years of
           data and over <strong>1700</strong> courses. Attained{" "}
-          <strong>50,000</strong>
-          interactions from students and faculty within the first month of
+          <strong>50,000</strong> interactions from students and faculty within the first month of
           launch.
         </li>
       </>
