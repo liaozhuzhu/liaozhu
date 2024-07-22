@@ -14,7 +14,13 @@ export function CanvasRevealEffectCards() {
             containerClassName="bg-emerald-900"
           />
         </Card>
-        <Card title="Contact" icon={<AceternityIcon />}>
+        <Card title="Projects" icon={<AceternityIcon />}>
+          <CanvasRevealEffect
+            animationSpeed={5.1}
+            containerClassName="bg-emerald-900"
+          />
+        </Card>
+        <Card title="Personal Life" icon={<AceternityIcon />}>
           <CanvasRevealEffect
             animationSpeed={3}
             containerClassName="bg-black"

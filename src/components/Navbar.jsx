@@ -20,9 +20,9 @@ export default function Navbar () {
               Projects
             </p>
           </Link>
-          <Link href="/contact">
+          <Link href="/personal">
             <p className="text-md text-zinc-500 transition duration-300 hover:text-zinc-50 p-2 rounded-lg">
-              Contact
+              Personal Life
             </p>
           </Link>
         </div>

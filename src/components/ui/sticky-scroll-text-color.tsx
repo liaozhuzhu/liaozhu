@@ -4,7 +4,7 @@ import { useMotionValueEvent, useScroll } from "framer-motion";
 import { motion } from "framer-motion";
 import { cn } from "../../lib/utils";
 
-export const StickyScroll = ({
+export const StickyScrollTextColor = ({
   content,
   contentClassName,
 }: {
@@ -41,13 +41,12 @@ export const StickyScroll = ({
   });
 
   const backgroundColors = [
-    "var(--zinc-900)",
     "var(--zinc-950)",
-    "var(--black)",
+    "var(--zinc-900)",
   ];
   const linearGradients = [
-    "linear-gradient(to bottom right, var(--white), var(--zinc-800))",
-    "linear-gradient(to bottom right, var(--green-300), var(--purple-700))",
+    "linear-gradient(to top right, var(--zinc-600), var(--yellow-400))",
+    "linear-gradient(to bottom right, var(--cyan-300), var(--white))",
   ];
 
   const [backgroundGradient, setBackgroundGradient] = useState(
@@ -88,7 +87,7 @@ export const StickyScroll = ({
                 animate={{
                   opacity: activeCard === index ? 1 : 0.3,
                 }}
-                className="text-kg text-slate-300 max-w-sm mt-10 list-disc text-start grid grid-cols-2 gap-4 pl-12 md:pl-20"
+                className="text-kg text-slate-300 max-w-sm mt-10 text-start gap-4 flex justify-center items-center flex-col list-disc"
               >
                 {item.description}
               </motion.ul>

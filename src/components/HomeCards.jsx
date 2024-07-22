@@ -11,20 +11,19 @@ export function HomeCards() {
 export const projects = [
   {
     title: "About Me",
-    description:
-      "Learn more about my skills, experiences, and interests.",
+    description: "Learn more about my skills, experiences, and interests.",
     link: "/about",
   },
   {
     title: "Projects",
     description:
-      "See what projects I've done in the past and what I'm currently working on.",
+      "Some of my significant work.",
     link: "/projects",
   },
   {
-    title: "Contact",
+    title: "Personal Life",
     description:
-      "Get in touch with me.",
-    link: "/contact",
+      "What I do for fun, my hobbies, and what makes me me outside of coding.",
+    link: "/personal",
   },
 ];
