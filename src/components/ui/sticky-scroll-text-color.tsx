@@ -29,7 +29,7 @@ export const StickyScrollTextColor = ({
     const cardsBreakpoints = content.map((_, index) => index / cardLength);
     const closestBreakpointIndex = cardsBreakpoints.reduce(
       (acc, breakpoint, index) => {
-        const distance = Math.abs(latest - breakpoint);
+        const distance = Math.abs(latest - breakpoint+0.2);
         if (distance < Math.abs(latest - cardsBreakpoints[acc])) {
           return index;
         }
@@ -45,7 +45,9 @@ export const StickyScrollTextColor = ({
     "var(--zinc-900)",
   ];
   const linearGradients = [
+    "linear-gradient(to top, var(--blue-600), var(--white))",
     "linear-gradient(to top right, var(--zinc-600), var(--yellow-400))",
+    "linear-gradient(to bottom left, var(--yellow-300), var(--zinc-50))",
     "linear-gradient(to bottom right, var(--cyan-300), var(--white))",
   ];
 
@@ -87,7 +89,7 @@ export const StickyScrollTextColor = ({
                 animate={{
                   opacity: activeCard === index ? 1 : 0.3,
                 }}
-                className="text-kg text-slate-300 max-w-sm mt-10 text-start gap-4 flex justify-center items-center flex-col list-disc"
+                className="text-kg text-slate-300 max-w-md mt-10 text-start gap-4 flex justify-center items-center flex-col list-disc"
               >
                 {item.description}
               </motion.ul>
