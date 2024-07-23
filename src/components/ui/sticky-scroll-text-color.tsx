@@ -29,7 +29,7 @@ export const StickyScrollTextColor = ({
     const cardsBreakpoints = content.map((_, index) => index / cardLength);
     const closestBreakpointIndex = cardsBreakpoints.reduce(
       (acc, breakpoint, index) => {
-        const distance = Math.abs(latest - breakpoint+0.2);
+        const distance = Math.abs(latest - breakpoint+0.12);
         if (distance < Math.abs(latest - cardsBreakpoints[acc])) {
           return index;
         }

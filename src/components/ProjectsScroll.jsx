@@ -13,8 +13,18 @@ const content = [
       <>
         <li>
           <strong className="text-xs italic">
-            *Future Demo at <a href="https://www.sigmobile.org/mobicom/2024/" target="_blank" rel="noreferrer" className="text-blue-600">ACM MobiCom 2024</a> by Columbia University
-          </strong><br/>
+            *Future Demo at{" "}
+            <a
+              href="https://www.sigmobile.org/mobicom/2024/"
+              target="_blank"
+              rel="noreferrer"
+              className="text-blue-600"
+            >
+              ACM MobiCom 2024
+            </a>{" "}
+            by Columbia University
+          </strong>
+          <br />
           Making IBM's 28 GHz PAAMs more accessible to younger audiences and
           other researchers by modernizing the controls of the PAAMs via a React
           application. The application allows users to safely control the PAAMs
@@ -26,24 +36,6 @@ const content = [
     content: (
       <div className="h-full w-full flex items-center justify-center text-white">
         <PAAMCard />
-      </div>
-    ),
-  },
-  {
-    title: "UIGrades",
-    description: (
-      <>
-        <li>
-          University's first ever course grade distribution for over 2 years of
-          data and over <strong>1700</strong> courses. Attained{" "}
-          <strong>50,000</strong> interactions from students and faculty within
-          the first month of launch.
-        </li>
-      </>
-    ),
-    content: (
-      <div className="h-full w-full flex items-center justify-center text-white">
-        <UIGradesCard />
       </div>
     ),
   },
@@ -63,6 +55,24 @@ const content = [
     content: (
       <div className="h-full w-full flex items-center justify-center text-white">
         <CourserCard />
+      </div>
+    ),
+  },
+  {
+    title: "UIGrades",
+    description: (
+      <>
+        <li>
+          University's first ever course grade distribution for over 2 years of
+          data and over <strong>1700</strong> courses. Attained{" "}
+          <strong>50,000</strong> interactions from students and faculty within
+          the first month of launch.
+        </li>
+      </>
+    ),
+    content: (
+      <div className="h-full w-full flex items-center justify-center text-white">
+        <UIGradesCard />
       </div>
     ),
   },
@@ -101,7 +111,7 @@ const content = [
 ];
 export function ProjectsScroll() {
   return (
-    <div className="p-10">
+    <div className="">
       <StickyScrollTextColor content={content} />
     </div>
   );
