@@ -26,8 +26,7 @@ export default function About() {
         </p>
         <br />
         <p className="text-zinc-100 z-10 lg:w-1/2 mx-10">
-          I love to learn as much as I love to teach. Learn more about my
-          teaching interests and experiences below.
+          I also have a passion for teaching and leadership. Scroll down to learn more about my experience in these areas.
         </p>
       </div>
       <BoxesCore />
