@@ -8,12 +8,12 @@ import { PAAMCard } from "./ui/paam-card";
 
 const content = [
   {
-    title: "PAAM (Phased Array Antenna Module) Application",
+    title: "Phased Array Antenna Module (PAAM) Application",
     description: (
       <>
         <li>
           <strong className="text-xs italic">
-            *Future Demo at{" "}
+            *Submitted for{" "}
             <a
               href="https://www.sigmobile.org/mobicom/2024/"
               target="_blank"
@@ -28,7 +28,7 @@ const content = [
           Making IBM's 28 GHz PAAMs more accessible to younger audiences and
           other researchers by modernizing the controls of the PAAMs via a React
           application. The application allows users to safely control the PAAMs
-          configurations and testing all while displaying the configuration back
+          configurations and testing all while displaying the configuration and other properties such as Beam Pattern back
           to the user in real time.
         </li>
       </>
