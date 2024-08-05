@@ -44,11 +44,11 @@ export default function About() {
       </div>
       <div className="flex justify-center items-center flex-col text-zinc-50 gap-3 h-screen text-center text-zinc-50">
         <h1 className="z-10 text-4xl font-bold">Awards / Honors</h1>
-        <ul className="flex justify-start items-start flex-col text-zinc-50 gap-3 h-screen text-center text-zinc-50 text-start list-disc mx-8">
-          <li className="z-10 md:text-xl text-lg">
+        <ul className="flex justify-start items-start flex-col text-zinc-50 gap-3 h-screen text-center text-zinc-50 text-start list-disc md:mx-8 ml-10">
+          <li className="z-10 md:text-xl text-md">
             UIUC HackIllinois 2024 - Top 5 "Knight" division
           </li>
-          <li className="z-10 md:text-xl text-lg">
+          <li className="z-10 md:text-xl text-md">
             UIowa Sustainability Case Competition 2024 - 1st Place
           </li>
           <li className="z-10 md:text-xl text-md">
