@@ -26,8 +26,7 @@ export default function Home() {
         <h1 className="text-4xl font-bold">Liao Zhu</h1>
         <p className="text-zinc-500">Computer Science and Mathematics</p>
         <h4 className="text-lg md:text-xl mx-4 text-center">
-          Fourth year at the University of Iowa. Current researcher at Columbia
-          University - Amazon SURE Fellow 2024
+          Fourth year at the University of Iowa. Previous Amazon SURE Fellow @ Columbia University. Studying Mathematics and Computer Science.
         </h4>
         <div className="flex justify-center items-center gap-3 z-10">
           <Link
@@ -49,7 +48,7 @@ export default function Home() {
           </Link>
           |
           <Link
-            href="https://github.com/liaozhuzhu"
+            href="mailto:liaozhucs@gmail.com"
             target="_blank"
             rel="noreferrer"
             className="text-zinc-50"
@@ -57,7 +56,7 @@ export default function Home() {
             <FontAwesomeIcon icon={faEnvelope} size="1x" />
           </Link>
         </div>
-        <BackgroundBeams />
+        <BackgroundBeams className="hidden md:block"/>
       </div>
       <div className="flex justify-center items-center h-screen text-zinc-50 flex-col">
         <h1 className="text-3xl font-bold">Check out these pages</h1>
