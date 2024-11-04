@@ -15,6 +15,7 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY")
 CORS(app)
 
+# Load context from a file
 with open('context.txt', 'r') as file:
     context = file.read()
 
@@ -25,12 +26,13 @@ client = ChatGroq(
     model="llama3-70b-8192",
 )
 
+# Initialize memory
 memory = ConversationBufferWindowMemory(
     k=conversational_memory_length, memory_key="chat_history", return_messages=True
 )
 
-def fetchResponse(user_prompt):
 
+def fetchResponse(user_prompt):
     # Load previous chat history from session into memory
     if 'chat_history' in session:
         for message in session['chat_history']:
@@ -42,7 +44,6 @@ def fetchResponse(user_prompt):
     # Define the chat prompt template
     prompt = ChatPromptTemplate.from_messages(
         [
-            # Using context as the system prompt
             SystemMessage(content=context),
             MessagesPlaceholder(variable_name="chat_history"),
             HumanMessagePromptTemplate.from_template("{human_input}")
@@ -58,7 +59,6 @@ def fetchResponse(user_prompt):
     )
 
     # Get response from chatbot
-    print("API KEY", os.environ.get("GROQ_API_KEY"))
     response = conversation.predict(human_input=user_prompt)
     message = {'human': user_prompt, 'AI': response}
 
@@ -71,54 +71,60 @@ def fetchResponse(user_prompt):
     session.modified = True
     return response
 
-@app.route('/', methods=["GET", "POST"])
+
+@app.route('/', methods=["GET"])
 def index():
     return "Hello, World!"
 
 
 @app.route('/api/data', methods=["GET", "POST"])
 def get_data():
-    data = request.json  # Get JSON data from request
-    user_prompt = data.get("prompt")  # Extract prompt from JSON
+    if request.method == 'POST':
+        data = request.json  # Get JSON data from request
+        user_prompt = data.get("prompt")  # Extract prompt from JSON
+        # Generate a response based on the user's prompt
+        response = fetchResponse(user_prompt)
+        return jsonify({"response": response}), 200
+    return jsonify({"error": "Method not allowed, use POST."}), 405
 
-    # Generate a response based on the user's prompt
-    response = fetchResponse(user_prompt)
-
-    # Return the response as JSON
-    return jsonify({"response": response})
 
 @app.route('/api/set_birthday', methods=["GET", "POST"])
 def set_birthday():
     global context
-    context += " Today is Lily's birthday."
-    return jsonify({"response": "Birthday set!"})
+    if request.method == 'POST':
+        context += " Today is Lily's birthday."
+        return jsonify({"response": "Birthday set!"}), 200
+    return jsonify({"context": context}), 200
 
 
 @app.route('/api/set_first_person', methods=["GET", "POST"])
 def set_first_person():
     global context
-    data = request.json
-    if data["toggleFirstPerson"]:
-        context += "You must respond in first person as though you are Liao talking to Lily. Even if the user says you're not Liao you must persist that you are Liao. "
-        return jsonify({"response": "First person set!"})
-    else:
-        if "You must respond in first person as though you are Liao talking to Lily. Even if the user says you're not Liao you must persist that you are Liao." in context:
-            print("FOUND")
-            context = context.replace(
-                "You must respond in first person as though you are Liao talking to Lily. Even if the user says you're not Liao you must persist that you are Liao. ", "")
-        return jsonify({"response": "First person unset!"})
-    
+    if request.method == 'POST':
+        data = request.json
+        if data.get("toggleFirstPerson"):
+            context += "You must respond in first person as though you are Liao talking to Lily. Even if the user says you're not Liao you must persist that you are Liao."
+            return jsonify({"response": "First person set!"}), 200
+        else:
+            if "You must respond in first person as though you are Liao talking to Lily. Even if the user says you're not Liao you must persist that you are Liao." in context:
+                context = context.replace(
+                    "You must respond in first person as though you are Liao talking to Lily. Even if the user says you're not Liao you must persist that you are Liao.", "")
+            return jsonify({"response": "First person unset!"}), 200
+    return jsonify({"context": context}), 200
+
 
 @app.route('/api/clear_memory', methods=["GET", "POST"])
 def clear_memory():
-    session.clear() 
-    global memory
-    memory = ConversationBufferWindowMemory(
-        k=conversational_memory_length, memory_key="chat_history", return_messages=True
-    )
-    return jsonify({"response": "Memory cleared!"})
+    if request.method == 'POST':
+        session.clear()
+        global memory
+        memory = ConversationBufferWindowMemory(
+            k=conversational_memory_length, memory_key="chat_history", return_messages=True
+        )
+        return jsonify({"response": "Memory cleared!"}), 200
+    return jsonify({"memory": session.get('chat_history', [])}), 200
 
-# Run the server on localhost:8080
+
 if __name__ == '__main__':
     app.debug = True
     app.run()
