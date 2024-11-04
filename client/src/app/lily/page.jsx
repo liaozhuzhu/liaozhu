@@ -16,6 +16,7 @@ export default function Lily() {
   const [date, setDate] = useState(new Date());
   const [isBirthday, setIsBirthday] = useState(false);
   const [showLetter, setShowLetter] = useState(false);
+  const [isDev, setIsDev] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, document.body.scrollHeight);
@@ -41,11 +42,22 @@ export default function Lily() {
       now.toLocaleString("en-US", { timeZone: "Asia/Bangkok" })
     );
     setIsBirthday(currentDate.getMonth() === 10 && currentDate.getDate() === 7);
+
+    const url = window.location.href;
+    if (url.includes("localhost")) {
+      setIsDev(true);
+    } else {
+      setIsDev(false);
+    }
   }, []);
+
+  const API_URL = isDev
+    ? "http://127.0.0.1:5000/api"
+    : "https://liaozhuapi.onrender.com/api";
 
   useEffect(() => {
     if (isBirthday) {
-      axios.post("http://127.0.0.1:8080/api/set_birthday").catch(() => {
+      axios.post(API_URL + "/set_birthday").catch(() => {
         console.error("Error setting birthday");
       });
     }
@@ -61,7 +73,7 @@ export default function Lily() {
 
       try {
         const response = await axios.post(
-          "http://127.0.0.1:8080/api/set_first_person",
+          API_URL + "/set_first_person",
           {
             toggleFirstPerson: firstPerson,
           }
@@ -77,7 +89,7 @@ export default function Lily() {
     const clearMemory = async () => {
       try {
         const response = await axios.post(
-          "http://127.0.0.1:8080/api/clear_memory"
+          API_URL + "/clear_memory"
         );
 
         const res = response.data.response;
@@ -118,7 +130,7 @@ export default function Lily() {
     setIsLoading(true);
 
     try {
-      const response = await axios.post("http://127.0.0.1:8080/api/data", {
+      const response = await axios.post(API_URL + "/data", {
         prompt: promptToSend,
       });
 
