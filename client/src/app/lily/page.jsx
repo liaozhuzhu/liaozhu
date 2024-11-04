@@ -127,6 +127,7 @@ export default function Lily() {
       ...prevHistory,
       { type: "user", text: promptToSend },
     ]);
+    setPrompt("");
     setIsLoading(true);
 
     try {
@@ -145,7 +146,6 @@ export default function Lily() {
     } finally {
       setIsLoading(false);
     }
-    setPrompt("");
   };
 
   return (
