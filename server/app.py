@@ -76,7 +76,7 @@ def index():
     return "Hello, World!"
 
 
-@app.route('/api/data', methods=['POST'])
+@app.route('/api/data', methods=["GET", "POST"])
 def get_data():
     data = request.json  # Get JSON data from request
     user_prompt = data.get("prompt")  # Extract prompt from JSON
@@ -87,14 +87,14 @@ def get_data():
     # Return the response as JSON
     return jsonify({"response": response})
 
-@app.route('/api/set_birthday', methods=['POST'])
+@app.route('/api/set_birthday', methods=["GET", "POST"])
 def set_birthday():
     global context
     context += " Today is Lily's birthday."
     return jsonify({"response": "Birthday set!"})
 
 
-@app.route('/api/set_first_person', methods=['POST'])
+@app.route('/api/set_first_person', methods=["GET", "POST"])
 def set_first_person():
     global context
     data = request.json
@@ -109,7 +109,7 @@ def set_first_person():
         return jsonify({"response": "First person unset!"})
     
 
-@app.route('/api/clear_memory', methods=['POST'])
+@app.route('/api/clear_memory', methods=["GET", "POST"])
 def clear_memory():
     session.clear() 
     global memory
