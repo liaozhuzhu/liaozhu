@@ -240,6 +240,7 @@ export default function Lily() {
             <button
               className="bg-zinc-50 text-zinc-900 p-2 rounded-e-lg ml-2 hover:bg-zinc-700 transition duration-300"
               type="submit"
+              disabled={isLoading}
             >
               <FontAwesomeIcon icon={faHeart} className="text-fuchsia-500" />
             </button>

@@ -117,4 +117,4 @@ def clear_memory():
 
 # Run the server on localhost:8080
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
