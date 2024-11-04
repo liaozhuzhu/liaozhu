@@ -71,6 +71,10 @@ def fetchResponse(user_prompt):
     session.modified = True
     return response
 
+@app.route('/', methods=["GET", "POST"])
+def index():
+    return "Hello, World!"
+
 
 @app.route('/api/data', methods=['POST'])
 def get_data():
