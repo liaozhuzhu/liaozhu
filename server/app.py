@@ -12,7 +12,7 @@ from langchain_groq import ChatGroq
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = 'liaosecretkey'
+app.secret_key = os.environ.get("SECRET_KEY")
 CORS(app)
 
 with open('context.txt', 'r') as file:
