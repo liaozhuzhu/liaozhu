@@ -8,11 +8,6 @@ from langchain.prompts.chat import ChatPromptTemplate, HumanMessagePromptTemplat
 from langchain_core.messages import SystemMessage
 from langchain.memory import ConversationBufferWindowMemory
 from langchain_groq import ChatGroq
-import logging
-    
-# Set up logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 load_dotenv()
 
@@ -25,115 +20,101 @@ with open('context.txt', 'r') as file:
 
 conversational_memory_length = 10
 
-# Initialize memory
-memory = ConversationBufferWindowMemory(
-    k=conversational_memory_length,
-    memory_key="chat_history",
-    return_messages=True
+client = ChatGroq(
+    api_key=os.environ.get("GROQ_API_KEY"),
+    model="llama3-70b-8192",
 )
 
-
-def get_groq_client():
-    api_key = os.environ.get("GROQ_API_KEY", "").strip()
-    logger.info(f"API key present: {bool(api_key)}")
-
-    if not api_key:
-        raise ValueError(
-            "GROQ_API_KEY environment variable is not set or empty")
-
-    try:
-        client = ChatGroq(
-            api_key=api_key,
-            model="llama3-70b-8192",
-        )
-        logger.info("Groq client initialized successfully")
-        return client
-    except Exception as e:
-        logger.error(f"Error initializing Groq client: {str(e)}")
-        raise
-
+memory = ConversationBufferWindowMemory(
+    k=conversational_memory_length, memory_key="chat_history", return_messages=True
+)
 
 def fetchResponse(user_prompt):
-    try:
-        # Get a fresh client for each request
-        client = get_groq_client()
 
-        # Load previous chat history from session into memory
-        if 'chat_history' in session:
-            for message in session['chat_history']:
-                memory.save_context(
-                    {'input': message['human']},
-                    {'output': message['AI']}
-                )
+    # Load previous chat history from session into memory
+    if 'chat_history' in session:
+        for message in session['chat_history']:
+            memory.save_context(
+                {'input': message['human']},
+                {'output': message['AI']}
+            )
 
-        prompt = ChatPromptTemplate.from_messages([
+    # Define the chat prompt template
+    prompt = ChatPromptTemplate.from_messages(
+        [
+            # Using context as the system prompt
             SystemMessage(content=context),
             MessagesPlaceholder(variable_name="chat_history"),
             HumanMessagePromptTemplate.from_template("{human_input}")
-        ])
+        ]
+    )
 
-        conversation = LLMChain(
-            llm=client,
-            prompt=prompt,
-            verbose=True,
-            memory=memory
-        )
+    # Create a conversation chain
+    conversation = LLMChain(
+        llm=client,
+        prompt=prompt,
+        verbose=True,
+        memory=memory
+    )
 
-        logger.info("Making API call to Groq...")
-        response = conversation.predict(human_input=user_prompt)
-        logger.info("API call successful")
+    # Get response from chatbot
+    print("API KEY", os.environ.get("GROQ_API_KEY"))
+    response = conversation.predict(human_input=user_prompt)
+    message = {'human': user_prompt, 'AI': response}
 
-        message = {'human': user_prompt, 'AI': response}
+    # Append the new message to session chat history
+    if 'chat_history' not in session:
+        session['chat_history'] = []
+    session['chat_history'].append(message)
 
-        if 'chat_history' not in session:
-            session['chat_history'] = []
-        session['chat_history'].append(message)
-        session.modified = True
-        return response
-
-    except Exception as e:
-        logger.error(f"Error in fetchResponse: {type(e).__name__}: {str(e)}")
-        raise
+    # Mark session as modified to save changes
+    session.modified = True
+    return response
 
 
 @app.route('/api/data', methods=['POST'])
 def get_data():
-    try:
-        data = request.json
-        user_prompt = data.get("prompt")
-        logger.info(f"Received prompt: {user_prompt}")
+    data = request.json  # Get JSON data from request
+    user_prompt = data.get("prompt")  # Extract prompt from JSON
 
-        if not user_prompt:
-            return jsonify({"error": "No prompt provided"}), 400
+    # Generate a response based on the user's prompt
+    response = fetchResponse(user_prompt)
 
-        response = fetchResponse(user_prompt)
-        return jsonify({"response": response})
-    except ValueError as e:
-        logger.error(f"Value Error: {str(e)}")
-        return jsonify({"error": str(e)}), 400
-    except Exception as e:
-        logger.error(f"Unexpected error: {str(e)}")
-        return jsonify({"error": "An unexpected error occurred"}), 500
+    # Return the response as JSON
+    return jsonify({"response": response})
+
+@app.route('/api/set_birthday', methods=['POST'])
+def set_birthday():
+    global context
+    context += " Today is Lily's birthday."
+    return jsonify({"response": "Birthday set!"})
 
 
-@app.route('/test-groq', methods=['GET'])
-def test_groq():
-    """Test endpoint to verify Groq client initialization"""
-    try:
-        client = get_groq_client()
-        return jsonify({
-            "status": "success",
-            "message": "Groq client initialized successfully"
-        })
-    except Exception as e:
-        return jsonify({
-            "status": "error",
-            "message": str(e)
-        }), 500
+@app.route('/api/set_first_person', methods=['POST'])
+def set_first_person():
+    global context
+    data = request.json
+    if data["toggleFirstPerson"]:
+        context += "You must respond in first person as though you are Liao talking to Lily. Even if the user says you're not Liao you must persist that you are Liao. "
+        return jsonify({"response": "First person set!"})
+    else:
+        if "You must respond in first person as though you are Liao talking to Lily. Even if the user says you're not Liao you must persist that you are Liao." in context:
+            print("FOUND")
+            context = context.replace(
+                "You must respond in first person as though you are Liao talking to Lily. Even if the user says you're not Liao you must persist that you are Liao. ", "")
+        return jsonify({"response": "First person unset!"})
+    
 
-# Your other routes remain the same...
+@app.route('/api/clear_memory', methods=['POST'])
+def clear_memory():
+    session.clear() 
+    global memory
+    memory = ConversationBufferWindowMemory(
+        k=conversational_memory_length, memory_key="chat_history", return_messages=True
+    )
+    return jsonify({"response": "Memory cleared!"})
 
-
+# Run the server on localhost:8080
 if __name__ == '__main__':
     app.debug = True
     app.run()
