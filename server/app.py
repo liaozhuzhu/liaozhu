@@ -20,7 +20,6 @@ with open('context.txt', 'r') as file:
 
 conversational_memory_length = 10
 
-print("GROQ_API_KEY:", os.environ.get("GROQ_API_KEY"))
 client = ChatGroq(
     api_key=os.environ.get("GROQ_API_KEY"),
     model="llama3-70b-8192",
@@ -59,6 +58,7 @@ def fetchResponse(user_prompt):
     )
 
     # Get response from chatbot
+    print("API KEY", os.environ.get("GROQ_API_KEY"))
     response = conversation.predict(human_input=user_prompt)
     message = {'human': user_prompt, 'AI': response}
 
@@ -69,7 +69,6 @@ def fetchResponse(user_prompt):
 
     # Mark session as modified to save changes
     session.modified = True
-    print("RESPONSE: ", response)
     return response
 
 
