@@ -13,7 +13,7 @@ load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = 'liaosecretkey'
-CORS(app, origins=["http://localhost:3000", "https://liaozhu.vercel.app", "https://liaozhu.dev"])
+CORS(app)
 
 with open('context.txt', 'r') as file:
     context = file.read()
