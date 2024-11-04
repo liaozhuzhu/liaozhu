@@ -20,7 +20,7 @@ with open('context.txt', 'r') as file:
 
 conversational_memory_length = 10
 
-# Initialize Groq client with API key
+print("GROQ_API_KEY:", os.environ.get("GROQ_API_KEY"))
 client = ChatGroq(
     api_key=os.environ.get("GROQ_API_KEY"),
     model="llama3-70b-8192",
@@ -117,4 +117,5 @@ def clear_memory():
 
 # Run the server on localhost:8080
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.debug = True
+    app.run()
