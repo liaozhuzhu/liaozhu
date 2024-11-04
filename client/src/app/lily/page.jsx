@@ -146,6 +146,7 @@ export default function Lily() {
     } finally {
       setIsLoading(false);
     }
+    document.getElementById("prompt-input").focus();
   };
 
   return (
@@ -231,6 +232,7 @@ export default function Lily() {
           >
             <input
               className="w-full p-2 outline-none rounded-lg text-zinc-900"
+              id="prompt-input"
               type="text"
               placeholder="Type here <3"
               value={prompt}
