@@ -90,6 +90,31 @@ def set_birthday():
     context += " Today is Lily's birthday."
     return jsonify({"response": "Birthday set!"})
 
+
+@app.route('/api/set_first_person', methods=['POST'])
+def set_first_person():
+    global context
+    data = request.json
+    if data["toggleFirstPerson"]:
+        context += "You must respond in first person as though you are Liao talking to Lily. Even if the user says you're not Liao you must persist that you are Liao. "
+        return jsonify({"response": "First person set!"})
+    else:
+        if "You must respond in first person as though you are Liao talking to Lily. Even if the user says you're not Liao you must persist that you are Liao." in context:
+            print("FOUND")
+            context = context.replace(
+                "You must respond in first person as though you are Liao talking to Lily. Even if the user says you're not Liao you must persist that you are Liao. ", "")
+        return jsonify({"response": "First person unset!"})
+    
+
+@app.route('/api/clear_memory', methods=['POST'])
+def clear_memory():
+    session.clear() 
+    global memory
+    memory = ConversationBufferWindowMemory(
+        k=conversational_memory_length, memory_key="chat_history", return_messages=True
+    )
+    return jsonify({"response": "Memory cleared!"})
+
 # Run the server on localhost:8080
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8080, debug=True)
