@@ -17,20 +17,21 @@ CORS(app)
 
 with open('context.txt', 'r') as file:
     context = file.read()
-
-conversational_memory_length = 10
-
-client = ChatGroq(
-    api_key=os.environ.get("GROQ_API_KEY"),
-    model="llama3-70b-8192",
-)
-
-memory = ConversationBufferWindowMemory(
-    k=conversational_memory_length, memory_key="chat_history", return_messages=True
-)
+    
+CONVERSATIONAL_MEMORY_LENGTH = 10
 
 def fetchResponse(user_prompt):
-    print("API KEY", os.environ.get("GROQ_API_KEY"))
+
+    client = ChatGroq(
+        api_key="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",
+        model="llama3-70b-8192",
+    )
+
+    memory = ConversationBufferWindowMemory(
+        k=CONVERSATIONAL_MEMORY_LENGTH, memory_key="chat_history", return_messages=True
+    )
+    
+    print("CLIENT" , client)
     try:
         # Load previous chat history from session into memory
         if 'chat_history' in session:
@@ -49,13 +50,12 @@ def fetchResponse(user_prompt):
                 HumanMessagePromptTemplate.from_template("{human_input}")
             ]
         )
-
-        # Create a conversation chain
+        
         conversation = LLMChain(
             llm=client,
             prompt=prompt,
             verbose=True,
-            memory=memory,
+            memory=memory
         )
 
         # Get response from chatbot
@@ -118,7 +118,7 @@ def clear_memory():
     session.clear() 
     global memory
     memory = ConversationBufferWindowMemory(
-        k=conversational_memory_length, memory_key="chat_history", return_messages=True
+        k=CONVERSATIONAL_MEMORY_LENGTH, memory_key="chat_history", return_messages=True
     )
     return jsonify({"response": "Memory cleared!"})
 
