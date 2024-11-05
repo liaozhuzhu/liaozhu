@@ -55,14 +55,6 @@ export default function Lily() {
     ? "http://127.0.0.1:5000/api"
     : "https://liaozhuapi.onrender.com/api";
 
-  useEffect(() => {
-    if (isBirthday) {
-      axios.post(API_URL + "/set_birthday").catch(() => {
-        console.error("Error setting birthday");
-      });
-    }
-  }, [isBirthday]);
-
   const handleQuickPrompt = (promptText) => {
     setPrompt(promptText);
     handleSubmit(null, promptText);
@@ -70,14 +62,10 @@ export default function Lily() {
 
   useEffect(() => {
     const handleFirstPerson = async () => {
-
       try {
-        const response = await axios.post(
-          API_URL + "/set_first_person",
-          {
-            toggleFirstPerson: firstPerson,
-          }
-        );
+        const response = await axios.post(API_URL + "/set_first_person", {
+          toggleFirstPerson: firstPerson,
+        });
 
         const res = response.data.response;
         console.log(res);
@@ -86,22 +74,29 @@ export default function Lily() {
       }
     };
 
+    const setBirthday = async () => {
+      if (isBirthday) {
+        axios.post(API_URL + "/set_birthday").catch(() => {
+          console.error("Error setting birthday");
+        });
+      }
+    }
+
     const clearMemory = async () => {
       try {
-        const response = await axios.post(
-          API_URL + "/clear_memory"
-        );
+        const response = await axios.post(API_URL + "/clear_memory");
 
         const res = response.data.response;
         console.log(res);
       } catch (error) {
         console.error("Error fetching response:", error);
       }
-    }
+    };
 
     handleFirstPerson();
     clearMemory();
-  }, [firstPerson])
+    setBirthday();
+  }, [isDev, isBirthday, firstPerson]);
 
   const isHTML = (str) => {
     const doc = new DOMParser().parseFromString(str, "text/html");
