@@ -30,7 +30,7 @@ memory = ConversationBufferWindowMemory(
 )
 
 def fetchResponse(user_prompt):
-
+    print("API KEY", os.environ.get("GROQ_API_KEY"))
     try:
         # Load previous chat history from session into memory
         if 'chat_history' in session:
