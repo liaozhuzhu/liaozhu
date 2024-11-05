@@ -20,18 +20,16 @@ with open('context.txt', 'r') as file:
     
 CONVERSATIONAL_MEMORY_LENGTH = 10
 
-def fetchResponse(user_prompt):
+client = ChatGroq(
+    api_key=os.environ.get("GROQ_API_KEY"),
+    model="llama3-70b-8192",
+)
 
-    client = ChatGroq(
-        api_key=os.environ.get("GROQ_API_KEY"),
-        model="llama3-70b-8192",
-    )
+memory = ConversationBufferWindowMemory(
+    k=CONVERSATIONAL_MEMORY_LENGTH, memory_key="chat_history", return_messages=True
+)
 
-    memory = ConversationBufferWindowMemory(
-        k=CONVERSATIONAL_MEMORY_LENGTH, memory_key="chat_history", return_messages=True
-    )
-    
-    print("CLIENT" , client)
+def fetchResponse(user_prompt):  
     try:
         # Load previous chat history from session into memory
         if 'chat_history' in session:
