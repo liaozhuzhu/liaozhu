@@ -31,45 +31,49 @@ memory = ConversationBufferWindowMemory(
 
 def fetchResponse(user_prompt):
 
-    # Load previous chat history from session into memory
-    if 'chat_history' in session:
-        for message in session['chat_history']:
-            memory.save_context(
-                {'input': message['human']},
-                {'output': message['AI']}
-            )
+    try:
+        # Load previous chat history from session into memory
+        if 'chat_history' in session:
+            for message in session['chat_history']:
+                memory.save_context(
+                    {'input': message['human']},
+                    {'output': message['AI']}
+                )
 
-    # Define the chat prompt template
-    prompt = ChatPromptTemplate.from_messages(
-        [
-            # Using context as the system prompt
-            SystemMessage(content=context),
-            MessagesPlaceholder(variable_name="chat_history"),
-            HumanMessagePromptTemplate.from_template("{human_input}")
-        ]
-    )
+        # Define the chat prompt template
+        prompt = ChatPromptTemplate.from_messages(
+            [
+                # Using context as the system prompt
+                SystemMessage(content=context),
+                MessagesPlaceholder(variable_name="chat_history"),
+                HumanMessagePromptTemplate.from_template("{human_input}")
+            ]
+        )
 
-    # Create a conversation chain
-    conversation = LLMChain(
-        llm=client,
-        prompt=prompt,
-        verbose=True,
-        memory=memory
-    )
+        # Create a conversation chain
+        conversation = LLMChain(
+            llm=client,
+            prompt=prompt,
+            verbose=True,
+            memory=memory
+        )
 
-    # Get response from chatbot
-    print("API KEY", os.environ.get("GROQ_API_KEY"))
-    response = conversation.predict(human_input=user_prompt)
-    message = {'human': user_prompt, 'AI': response}
+        # Get response from chatbot
+        print("API KEY", os.environ.get("GROQ_API_KEY"))
+        response = conversation.predict(human_input=user_prompt)
+        message = {'human': user_prompt, 'AI': response}
 
-    # Append the new message to session chat history
-    if 'chat_history' not in session:
-        session['chat_history'] = []
-    session['chat_history'].append(message)
+        # Append the new message to session chat history
+        if 'chat_history' not in session:
+            session['chat_history'] = []
+        session['chat_history'].append(message)
 
-    # Mark session as modified to save changes
-    session.modified = True
-    return response
+        # Mark session as modified to save changes
+        session.modified = True
+        return response
+    except Exception as e:
+        print("ERROR OCCURRED", e)
+        return "An error occurred. Please try again."
 
 @app.route('/', methods=["GET", "POST"])
 
