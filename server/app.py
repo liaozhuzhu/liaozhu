@@ -56,7 +56,6 @@ def fetchResponse(user_prompt):
             prompt=prompt,
             verbose=True,
             memory=memory,
-            api_key=os.environ.get("GROQ_API_KEY")
         )
 
         # Get response from chatbot
