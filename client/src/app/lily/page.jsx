@@ -23,6 +23,7 @@ export default function Lily() {
   }, [messageHistory]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const now = new Date();
     const options = {
       timeZone: "Asia/Bangkok",
@@ -149,12 +150,12 @@ export default function Lily() {
       {showLetter && <Letter toggleLetter={toggleLetter} />}
       <div className="flex flex-col justify-center items-center min-h-screen text-zinc-50 w-full">
         {messageHistory.length === 0 && (
-          <div className="flex flex-col justify-between h-[500px] items-center w-full mt-40 gap-4">
+          <div className="flex flex-col justify-between h-[500px] items-center w-full mt-20 gap-4">
             <h1 className="text-5xl font-bold">Hi Lily!</h1>
             <div className="flex flex-col justify-center items-center gap-2">
               <div className="flex flex-col md:flex-row justify-start items-start gap-2">
                 <div
-                  className="flex text-center p-2 rounded-lg w-40 h-20 justify-center items-center cursor-pointer hover:border-2 transition duration-300 border border-zinc-50"
+                  className="flex text-center p-2 rounded-lg w-64 md:w-40 h-20 justify-center items-center cursor-pointer hover:border-2 transition duration-300 border border-zinc-50"
                   onClick={() => {
                     handleQuickPrompt("What is my favorite animal?");
                   }}
@@ -162,7 +163,7 @@ export default function Lily() {
                   <p>What is my favorite animal?</p>
                 </div>
                 <div
-                  className="flex text-center p-2 rounded-lg w-40 h-20 justify-center items-center cursor-pointer hover:border-2 transition duration-300 border border-zinc-50"
+                  className="flex text-center p-2 rounded-lg w-64 md:w-40 h-20 justify-center items-center cursor-pointer hover:border-2 transition duration-300 border border-zinc-50"
                   onClick={() => {
                     handleQuickPrompt("When is my birthday?");
                   }}
@@ -170,7 +171,7 @@ export default function Lily() {
                   <p>When is my birthday?</p>
                 </div>
                 <div
-                  className="flex text-center p-2 rounded-lg w-40 h-20 justify-center items-center cursor-pointer hover:border-2 transition duration-300 border border-zinc-50"
+                  className="flex text-center p-2 rounded-lg w-64 md:w-40 h-20 justify-center items-center cursor-pointer hover:border-2 transition duration-300 border border-zinc-50"
                   onClick={() => {
                     handleQuickPrompt("How did Liao make this?");
                   }}
@@ -202,7 +203,7 @@ export default function Lily() {
             </div>
           </div>
         )}
-        <div className="flex flex-col justify-start items-end overflow-auto flex-grow w-3/4 p-2">
+        <div className="flex flex-col justify-start items-end overflow-auto flex-grow w-full md:w-3/4 p-2">
           {messageHistory.map((message, index) => (
             <div key={index} className={index % 2 === 0 ? "" : "w-full"}>
               {message.isHtml ? (
@@ -228,7 +229,7 @@ export default function Lily() {
             <FontAwesomeIcon icon={faRedo} className="text-fuchsia-500" />
           </button>
           <form
-            className="flex justify-between rounded-lg items-center w-1/2 m-4 bg-zinc-50"
+            className="flex justify-between rounded-lg items-center w-4/5 md:w-1/2 m-4 bg-zinc-50"
             onSubmit={handleSubmit}
           >
             <input
