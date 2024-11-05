@@ -73,9 +73,11 @@ def fetchResponse(user_prompt):
         return response
     except Exception as e:
         print("ERROR OCCURRED", e)
-        return "An error occurred. Please try again."
+        
 
 @app.route('/', methods=["GET", "POST"])
+def index():
+    return "Hello, World!"
 
 
 @app.route('/api/data', methods=['POST'])
