@@ -23,7 +23,7 @@ CONVERSATIONAL_MEMORY_LENGTH = 10
 def fetchResponse(user_prompt):
 
     client = ChatGroq(
-        api_key="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",
+        api_key=os.environ.get("GROQ_API_KEY"),
         model="llama3-70b-8192",
     )
 
