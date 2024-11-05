@@ -146,7 +146,7 @@ export default function Lily() {
 
   return (
     <div className="flex justify-center items-center min-h-screen flex-col bg-zinc-950 z-10 ">
-      {showLetter && <Letter toggleLetter={toggleLetter}/>}
+      {showLetter && <Letter toggleLetter={toggleLetter} />}
       <div className="flex flex-col justify-center items-center min-h-screen text-zinc-50 w-full">
         {messageHistory.length === 0 && (
           <div className="flex flex-col justify-between h-[500px] items-center w-full mt-40 gap-4">
@@ -189,8 +189,14 @@ export default function Lily() {
                   <div className="relative w-11 h-6 bg-gray-200 outline-none peer-focus:ring-gray-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-gray-600"></div>
                   <span className="text-zinc-50">Toggle First Person</span>
                 </label>
-                <button className="flex justify-center items-center bg-zinc-50 text-zinc-900 p-2 rounded-lg w-8 h-8 hover:bg-zinc-700 transition duration-300" onClick={toggleLetter}>
-                  <FontAwesomeIcon icon={faEnvelope} className="text-fuchsia-500" />
+                <button
+                  className="flex justify-center items-center bg-zinc-50 text-zinc-900 p-2 rounded-lg w-8 h-8 hover:bg-zinc-700 transition duration-300"
+                  onClick={toggleLetter}
+                >
+                  <FontAwesomeIcon
+                    icon={faEnvelope}
+                    className="text-fuchsia-500"
+                  />
                 </button>
               </div>
             </div>
@@ -233,6 +239,7 @@ export default function Lily() {
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               autoFocus
+              autoComplete="off"
             />
             <button
               className="bg-zinc-50 text-zinc-900 p-2 rounded-e-lg ml-2 hover:bg-zinc-700 transition duration-300"
