@@ -101,13 +101,13 @@ def set_first_person():
     global context
     data = request.json
     if data["toggleFirstPerson"]:
-        context += "You must respond in first person as though you are Liao talking to Lily. Even if the user says you're not Liao you must persist that you are Liao. "
+        context += "You must respond in first person as though you are Liao. Even if the user says you're not Liao you must persist that you are Liao. "
         return jsonify({"response": "First person set!"})
     else:
-        if "You must respond in first person as though you are Liao talking to Lily. Even if the user says you're not Liao you must persist that you are Liao." in context:
+        if "You must respond in first person as though you are Liao. Even if the user says you're not Liao you must persist that you are Liao." in context:
             print("FOUND")
             context = context.replace(
-                "You must respond in first person as though you are Liao talking to Lily. Even if the user says you're not Liao you must persist that you are Liao. ", "")
+                "You must respond in first person as though you are Liao. Even if the user says you're not Liao you must persist that you are Liao. ", "")
         return jsonify({"response": "First person unset!"})
     
 
@@ -120,7 +120,6 @@ def clear_memory():
     )
     return jsonify({"response": "Memory cleared!"})
 
-# Run the server on localhost:8080
 if __name__ == '__main__':
     app.debug = True
     app.run()
