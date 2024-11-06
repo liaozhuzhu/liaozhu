@@ -13,7 +13,7 @@ const Letter = ({toggleLetter}) => {
   };
 
   return (
-    <div className="flex flex-col items-center p-5 absolute z-50 w-full">
+    <div className="flex flex-col items-center p-5 absolute z-50 w-full z-50">
         <button 
             className="bg-fuchsia-500 text-white font-bold py-2 px-4 rounded-full mb-4 hover:scale-105 transition duration-300"
             onClick={() => toggleLetter()}
